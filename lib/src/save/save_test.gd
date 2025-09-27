@@ -29,7 +29,7 @@ func _ready() -> void:
 	var data = SystemData.new()
 	print(str(data.toJson()))
 	s_mger.saveData("save_data", data.toJson())
-	var json = s_mger.loadData("save_Data")
+	var json = s_mger.loadData("save_data")
 	textEdit.text = json
 	var data2 = SystemData.new()
 	data2.fromJson(json)

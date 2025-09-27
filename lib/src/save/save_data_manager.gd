@@ -41,7 +41,7 @@ static var SECURITY_KEY:String:
 	set(v):
 		ProjectSettings.set_setting("lib/save/security_key", v)
 	get():
-		return ProjectSettings.get_setting("lib/save/security_key", "8F817F2ED5DC8F92")
+		return ProjectSettings.get_setting("lib/save/security_key", "012345ABCDE")
 static var SAVE_DIR:String:
 	set(v):
 		ProjectSettings.set_setting("lib/save/save_data_path", v)
@@ -95,7 +95,8 @@ func loadData(data_name, encrypt = true) -> String:
 		print("[SaveDataManager::loadData] open error : " + str(FileAccess.get_open_error()))
 		return ""
 	var data = file.get_as_text()
-	print("[SaveDataManager::loadData] path:" + str(path) + " save." + " data:" + str(data))
+	print("[SaveDataManager::loadData] path:" + str(path) + " save." + " data:" + str(data.length()))
+	# print("[SaveDataManager::loadData] path:" + str(path) + " save." + " data:" + str(data))
 	return data
 	
 func saveData(data_name, data:String, encrypt = true) -> bool:
@@ -112,7 +113,8 @@ func saveData(data_name, data:String, encrypt = true) -> bool:
 		return false
 	file.store_string(data)
 	file.close()
-	print("[SaveDataManager::saveData] path:" + str(path) + " save." + " data:" + str(data))
+	print("[SaveDataManager::saveData] path:" + str(path) + " save." + " data:" + str(data.length()))
+	# print("[SaveDataManager::saveData] path:" + str(path) + " save." + " data:" + str(data))
 	return true
 	
 func deleteData(data_name) -> bool:
@@ -143,6 +145,9 @@ func saveUserData(index:int = -1):
 func getUserData() -> UserData:
 	return getUserDataAccess().getCurrentData()
 	
+func deleteUserData(index:int):
+	getUserDataAccess().deleteData(index)
+	
 func loadSystemData(index:int):
 	getSystemDataAccess().loadCurrentData(index)
 	
@@ -153,3 +158,6 @@ func saveSystemData(index:int = -1):
 
 func getSystemData() -> SystemData:
 	return getSystemDataAccess().getCurrentData()
+
+func deleteSystemData(index:int):
+	getSystemDataAccess().deleteData(index)
